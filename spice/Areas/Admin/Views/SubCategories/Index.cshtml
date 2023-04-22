@@ -1,0 +1,53 @@
+﻿@model IEnumerable<SubCategory>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<div class="whitebackground border">
+     <div class="row">
+         <div class="col-6">
+             <h2 class="text-info">SubCategory List</h2>
+         </div>
+         <div class="col-6 text-right">
+              <a class="btn btn-primary" asp-action="Create" asp-controller="SubCategories" asp-area="Admin">  
+                  <i class='fas fa-plus-circle'></i> Create New </a>              
+         </div>
+     </div>
+     <div>
+        @if (!(@Model.Any()))       @*if (@Model.Count() == 0) { }*@
+        {
+            <span>No SubCategories...</span>
+        }
+        else
+        {
+            <table class="table table-hover border">
+                <tr class="table-secondary">
+                    <th>@Html.DisplayNameFor(x=>x.Name)</th>
+                    <th>@Html.DisplayNameFor(x=>x.Category.Name)</th>
+                    <th>
+
+                    </th>
+                </tr>
+                 @foreach (var item in Model)
+                 {
+                     <tr>
+                         <td>
+                              @* @item.Name*@ 
+                              @Html.DisplayFor(x=>item.Name)
+                         </td>
+                         <th>
+                              @Html.DisplayFor(x=>item.Category.Name)
+                         </th>
+                      <partial name="_operationbtnDeleteEditDetails" model="@item.Id">
+                     </tr>
+                       
+                 }
+            </table>
+           
+        }
+    </div>
+ </div>

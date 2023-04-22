@@ -1,0 +1,34 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace spice.Models
+{
+    public class MenuItem
+    {
+        [Key]
+        public int Id { get; set; }
+         
+        [Required]
+        public string Name { get; set; }    
+        public string Description { get; set; }
+        public double Price { get; set; }
+        public string Image { get; set; }
+        public string Spicyness { get; set; }
+        public enum Espicy {NA=0, NotSpicy=1, Spicy=2, VerySpicy=3 }
+
+        [Display(Name ="Category")]
+        public int CategoryId { get; set; }
+        [ForeignKey(nameof(CategoryId))]
+        public Category Category { get; set; }
+
+        [Display(Name = "SubCategory")]
+        public int SubcategoryId { get; set; }
+        [ForeignKey(nameof(SubcategoryId))]
+        public SubCategory SubCategory { get; set; }
+
+    }
+}

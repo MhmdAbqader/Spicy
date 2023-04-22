@@ -1,0 +1,109 @@
+﻿@model IEnumerable<spice.Models.Coupon>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Coupons Page</h1>
+
+ <h3 style="margin-left:20px">coupons</h3>
+ <div class="whitebackground border">
+     <div class="row">
+         <div class="col-6">
+             <h2 class="text-info">Coupons Page</h2>
+         </div>
+         <div class="col-6 text-right">
+              <a class="btn btn-primary" asp-action="Create" asp-controller="Coupons" asp-area="Admin">  
+                  <i class='fas fa-plus-circle'></i> Create New </a>              
+         </div>
+     </div>
+
+@*<p>
+    <a asp-action="Create">Create New Menu</a>
+</p>*@
+        @if(Model.Count() == 0)
+        {
+           <h class="text-danger font-weight-bold">No Coupons Added</h> 
+        }
+        else{
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CouponType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Discount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MinimumAmount)
+            </th>
+            <th>
+                Total after Discount
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Picture)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CouponType) 
+            </td>
+            <td>
+                
+                @Html.DisplayFor(modelItem => item.Discount)  
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MinimumAmount) 
+            </td>
+
+            <td>
+                @if(item.CouponType=="Percent")
+                  {
+                         <div style="background-color:lightgreen"> @(item.MinimumAmount - item.Discount / 100 * item.MinimumAmount) $</div>
+                  }
+                else{
+                          <div style="background-color:yellow">@(item.MinimumAmount-item.Discount) $</div>               
+                     }
+
+             </td>
+
+            <td>
+                            @if (item.Picture != null)
+                            {
+                               <img src="@("data:image/Jpeg;base64,"+ Convert.ToBase64String(item.Picture))"
+                               style="width:75px; height:100px"
+                               class="img-thumbnail">
+                            }
+                            else{
+                            <p>No Img</p>
+                            }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+}
+</div>
